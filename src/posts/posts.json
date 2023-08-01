@@ -1,0 +1,14 @@
+{"posts" : [
+{
+  "title" : "Project 1",
+  "id" : "project-1",
+  "description" : "Very cool!",
+  "progress" : 100
+},
+{
+  "title" : "Project 2",
+  "id" : "project-2",
+  "description" : "Hmm... yes! Also... very cool! But just how cool? Well, you'll have to wait and see, non?",
+  "progress" : 69
+}
+]}

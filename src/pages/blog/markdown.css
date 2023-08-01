@@ -1,0 +1,11 @@
+.markdown-container h1 {
+  @apply text-4xl font-bold
+}
+
+.markdown-container h2 {
+  @apply text-2xl font-bold
+}
+
+.markdown-container h3 {
+  @apply text-xl font-bold
+}
