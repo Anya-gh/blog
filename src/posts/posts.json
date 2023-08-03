@@ -10,5 +10,11 @@
   "id" : "project-2",
   "description" : "Hmm... yes! Also... very cool! But just how cool? Well, you'll have to wait and see, non?",
   "progress" : 69
+},
+{
+  "title" : "Fighting Game Analysis Engine",
+  "id" : "fighting-game-analysis-engine",
+  "description" : "An analysis engine for Guilty Gear Strive (GGST). Analysis engines are common in chess, where they rate each players moves; I built it for a similar purpose in GGST.",
+  "progress" : 100
 }
 ]}
