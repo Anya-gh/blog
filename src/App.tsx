@@ -13,7 +13,6 @@ function App() {
     <Routes>
       <Route path='' element={<Home />}/>
       {posts.map(post => {
-        console.log(post.id)
         return (
           <Route key={post.title} path={`/${post.id}`} element={<Blog id={post.id}/>}/>
         )

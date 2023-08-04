@@ -10,4 +10,6 @@ Chess is a mathematically "nice" game to analyse, particularly in the lens of Ga
 Designing an analysis engine for such a game is therefore quite simple; to rate each action, simply study all the possible continuations that can be reached and evaluate those. In practice, this is possible (though only very recently), albeit with very large amounts of data. 
 
 Fighting games are similar in some aspects, and substantially different in others.
+
+## Implementation and Deployment
 `;
