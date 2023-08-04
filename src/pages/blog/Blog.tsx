@@ -43,7 +43,8 @@ export default function Blog( {id} : BlogProps) {
   }
 
   interface HeadingProps {
-    children: React.ReactNode
+    children: React.ReactNode,
+    level: number
   }
 
   return (
@@ -56,9 +57,17 @@ export default function Blog( {id} : BlogProps) {
           const heading = Array.isArray(props.children) ? props.children[0] : props.children
           if (isString(heading)) {
             const slug = generateSlug(heading)
-            return <h2 id={slug}>{heading}</h2>
+            return <h2 className='pt-3 underline' id={slug}>{heading}</h2>
           }
           return <h2>{props.children}</h2>
+        },
+        h3: ( props : HeadingProps ) => {
+          const heading = Array.isArray(props.children) ? props.children[0] : props.children
+          if (isString(heading)) {
+            const slug = generateSlug(heading)
+            return <h3 className='mt-3 text-zinc-400' id={slug}>{heading}</h3>
+          }
+          return <h3 className='mt-3'>{props.children}</h3>
         }
       }}/>
     </div>
