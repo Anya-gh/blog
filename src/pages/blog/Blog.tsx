@@ -71,8 +71,6 @@ export default function Blog( {id} : BlogProps) {
           }
         }}/>
       </div>
-      <a target="_blank" href="https://icons8.com/icon/84005/home">Home</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
-      <a target="_blank" href="https://icons8.com/icon/3096/menu">Menu</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
     </motion.div>
   )
 }
