@@ -40,7 +40,7 @@ const ListElement = ({title, id, description, progress} : ListElementProps) => {
       <button onClick={(() => onClickHandler(id))} className='border-2 rounded-lg border-zinc-800 w-80 p-2 md:w-[35rem] lg:w-[50rem] flex flex-row justify-between mb-2'>
         <div className='flex flex-col items-start'>
           <h1 className='font-bold text-xl'>{title}</h1>
-          <p>{description}</p>
+          <p className='text-left'>{description}</p>
         </div>
         <h1>{`${progress}%`}</h1>
       </button>
