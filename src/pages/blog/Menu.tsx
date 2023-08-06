@@ -5,23 +5,23 @@ import menu from '../../assets/images/menu.svg'
 import logo from '../../assets/images/logo_shadow_transparent.png'
 
 interface MenuProps {
-  setModalOpen: Dispatch<SetStateAction<boolean>>
+  setTableOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export default function Menu( {setModalOpen} : MenuProps ) {
+export default function Menu( {setTableOpen} : MenuProps ) {
 
   const navigate = useNavigate()
   const onClickHome = () => { navigate('/') }
-  const onClickMenu = () => { setModalOpen(true)}
+  const onClickMenu = () => { setTableOpen(open => !open) }
 
   return (
     <>
-      <div className='border-r-2 border-l-2 border-b-2 border-zinc-900 bg-darkmetal w-screen h-10 text-sm sticky top-0 right-0 flex flex-row justify-between items-center p-4'>
-        <span className="flex flex-row">
-          <button onClick={onClickHome}><img alt='home' src={home} className='h-8 p-1 mr-2'/></button>
-          <button onClick={onClickMenu}><img alt='menu' src={menu} className='h-8 p-1 w-auto'/></button>
+      <div className='border-r-2 border-l-2 border-b-2 border-zinc-900 bg-darkmetal w-screen lg:w-32 h-10 lg:h-screen text-sm sticky top-0 left-0 lg:top-auto flex flex-row lg:flex-col justify-between items-center p-4 lg:p-2'>
+        <span className="flex flex-row lg:flex-col">
+          <button onClick={onClickHome}><img alt='home' src={home} className='h-8 p-1 lg:p-0 mr-2 lg:mr-0 lg:mb-4'/></button>
+          <button onClick={onClickMenu}><img alt='menu' src={menu} className='h-8 p-1 lg:p-0'/></button>
         </span>
-        <span><img alt='logo' src={logo} className='h-8 w-auto'/></span>
+        <span><a href='anya-gh.github.io/portfolio'><img alt='logo' src={logo} className='h-8 lg:h-auto'/></a></span>
       </div>
     </>
   )
