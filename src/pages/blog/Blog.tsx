@@ -56,15 +56,15 @@ export default function Blog( {id} : BlogProps) {
   return (
     <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {duration: 0.5}}} exit={{opacity: 0, transition: {duration: 0.5}}}
     className='flex flex-col lg:flex-row'>
-      <Menu setTableOpen={setTableOpen}/>
+      <Menu setTableOpen={setTableOpen} largeScreen={largeScreen}/>
       {!largeScreen && <AnimatePresence>{tableOpen && <Modal setTableOpen={setTableOpen} markdownRef={markdownRef}></Modal>}</AnimatePresence>}
-      <div className="markdown-container ml-2 mt-2 p-5 overflow-scroll" ref={markdownRef}>
+      <div className="markdown-container ml-2 mt-2 p-5 overflow-scroll h-screen scroll-smooth" ref={markdownRef}>
         <ReactMarkdown children={content} components={{
           h2: ( props : HeadingProps ) => {
             const heading = Array.isArray(props.children) ? props.children[0] : props.children
             if (isString(heading)) {
               const slug = generateSlug(heading)
-              return <h2 className='pt-3 underline' id={slug}>{heading}</h2>
+              return <h2 className='pt-3 border-b-4 border-zinc-800' id={slug}>{heading}</h2>
             }
             return <h2>{props.children}</h2>
           },
@@ -78,7 +78,7 @@ export default function Blog( {id} : BlogProps) {
           }
         }}/>
       </div>
-      {largeScreen && <AnimatePresence>{tableOpen && <Sidebar markdownRef={markdownRef} setTableOpen={setTableOpen}/>}</AnimatePresence>}
+      {largeScreen && <AnimatePresence mode='wait'>{tableOpen && <Sidebar markdownRef={markdownRef} setTableOpen={setTableOpen}/>}</AnimatePresence>}
     </motion.div>
   )
 }
