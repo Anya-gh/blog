@@ -15,8 +15,15 @@ function App() {
       <Routes location={location} key={location.pathname}>
         <Route path='' element={<Home />}/>
         {posts.map(post => {
-          return (
+          /*if (post.nestedPosts.length > 0) { return (
             <Route key={post.title} path={`/${post.id}`} element={<Blog id={post.id}/>}/>
+          )}
+          else  { post.nestedPosts.map(nestedPost => {
+            return ( <Route key={nestedPost.title} path={`/${nestedPost.id}`} element={<Blog id={nestedPost.id}/>}/> )
+          })}*/
+          return ( 
+            post.nestedPosts.length > 0 ? post.nestedPosts.map(nestedPost => { return ( <Route key={nestedPost.title} path={`/${post.id}/${nestedPost.id}`} element={<Blog id={nestedPost.id}/>}/> )})
+            : <Route key={post.title} path={`/${post.id}`} element={<Blog id={post.id}/>}/>
           )
         })}
       </Routes>
