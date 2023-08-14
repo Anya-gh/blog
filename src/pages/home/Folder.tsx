@@ -34,24 +34,26 @@ export default function Folder( {title, id, description, status, nestedPosts} : 
 
   return (
     <>
-    <div className='border-2 rounded-lg border-zinc-800 w-80 p-2 md:w-[35rem] lg:w-[50rem] flex flex-row justify-between mb-2 items-center'>
-      <div className='flex flex-col items-start'>
-        <span className='flex flex-row justify-between w-full'><span className='flex flex-row items-baseline'>{nestedPosts.length > 0 && <img src={folder} alt='folder' className='h-4 mr-2'/>}
-        <h1 className='font-bold text-xl'>{title}</h1></span>
-        <button onClick={(() => setShowPosts(state => !state))}><img src={dropdown} alt='dropdown' className={'h-4 mr-2 transition duration-200 ' + (showPosts ? '' : ' rotate-180')}/></button></span>
-        <p className='text-left'>{description}</p>
+    <li>
+      <div className='border-2 rounded-lg border-zinc-800 bg-zinc-700 w-80 p-2 md:w-[35rem] lg:w-[50rem] flex flex-col'>
+        <div className='flex flex-row justify-between'>
+          <span className='flex flex-row items-baseline'>{nestedPosts.length > 0 && <img src={folder} alt='folder' className='h-4 mr-2'/>}<h1 className='font-bold text-xl'>{title}</h1></span>
+          <span className='flex flex-row items-center'><h1 className={'tracking-widest ml-3 mr-2 ' + color}>{status}</h1><button onClick={(() => setShowPosts(state => !state))}><img src={dropdown} alt='dropdown' className={'h-4 mr-2 transition duration-200 ' + (showPosts ? '' : ' rotate-180')}/></button></span>
+        </div>
+        <p className='text-left mb-2'>{description}</p>
+        <div className='overflow-hidden'>
+          <AnimatePresence>
+          {showPosts && 
+            <motion.ul className="list-none" initial={{opacity: 0, y: "-100%"}} animate={{opacity: 1, transition: {duration: 0.2}, y: 0}} exit={{opacity: 0, transition: {duration: 0.2}, y: "-100%"}}>
+              {nestedPosts.map(post => {
+                return (<Post title={post.title} id={`${id}/${post.id}`} description={post.description} status={post.status} nested={true}/>)
+              })}
+            </motion.ul>
+          }
+          </AnimatePresence>
+        </div>
       </div>
-      <h1 className={'tracking-widest ml-3 ' + color}>{status}</h1>
-    </div>
-    <AnimatePresence>
-      {showPosts && 
-        <motion.ul className="mb-10 list-none" initial={{opacity: 0}} animate={{opacity: 1, transition: {duration: 0.2}}} exit={{opacity: 0, transition: {duration: 0.2}}}>
-          {nestedPosts.map(post => {
-            return (<Post title={post.title} id={`${id}/${post.id}`} description={post.description} status={post.status}/>)
-          })}
-        </motion.ul>
-      }
-      </AnimatePresence>
+    </li>
     </>
   )
 }

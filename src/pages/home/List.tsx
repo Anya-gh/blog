@@ -12,7 +12,7 @@ export default function List() {
     <div>
       <ul className="list-none mb-10">
         {posts.map(post => {
-        return (post.nestedPosts.length > 0 ? <Folder title={post.title} id={post.id} description={post.description} status={post.status} nestedPosts={post.nestedPosts}/> : <Post title={post.title} id={post.id} description={post.description} status={post.status}/>)
+        return (post.nestedPosts.length > 0 ? <Folder title={post.title} id={post.id} description={post.description} status={post.status} nestedPosts={post.nestedPosts}/> : <Post title={post.title} id={post.id} description={post.description} status={post.status} nested={false}/>)
         })}
       </ul>
     </div>

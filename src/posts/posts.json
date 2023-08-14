@@ -24,7 +24,7 @@
       "id" : "maio-part-1",
       "description" : "Planning and scoping the project.",
       "status" : "COMPLETE",
-      "nestedPosts" : []
+      "nested" : true
     }
   ]
 }
