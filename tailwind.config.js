@@ -10,9 +10,6 @@ export default {
         "darkmetal": "#1c1c1c"
       }
     },
-  },
-  plugins: [
-    require('@tailwindcss/typography')
-  ],
+  }
 }
 

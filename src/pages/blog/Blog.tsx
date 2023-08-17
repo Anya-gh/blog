@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react"
 import ReactMarkdown from 'react-markdown'
 import Menu from "./Menu"
-import './markdown.css'
 import Modal from "./Modal"
 import { AnimatePresence, motion } from "framer-motion"
 import Sidebar from "./Sidebar"
