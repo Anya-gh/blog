@@ -22,7 +22,8 @@ export default function Blog( {id} : BlogProps) {
     window
     .matchMedia("(min-width: 768px)")
     .addEventListener('change', e => setLargeScreen( e.matches ));
-    import(`../../posts/${id}.md`)
+    const path = `../../posts/${id}.md`
+    import(path)
     /*.then(res => {
         console.log(res)
         setContent(res.default)

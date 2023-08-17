@@ -22,7 +22,7 @@ function App() {
             return ( <Route key={nestedPost.title} path={`/${nestedPost.id}`} element={<Blog id={nestedPost.id}/>}/> )
           })}*/
           return ( 
-            post.nestedPosts.length > 0 ? post.nestedPosts.map(nestedPost => { return ( <Route key={nestedPost.title} path={`/${post.id}/${nestedPost.id}`} element={<Blog id={nestedPost.id}/>}/> )})
+            post.nestedPosts.length > 0 ? post.nestedPosts.map(nestedPost => { return ( <Route key={`${post.title}/${nestedPost.title}`} path={`/${post.id}/${nestedPost.id}`} element={<Blog id={`${post.id}/${nestedPost.id}`}/>}/> )})
             : <Route key={post.title} path={`/${post.id}`} element={<Blog id={post.id}/>}/>
           )
         })}
