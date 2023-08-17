@@ -54,18 +54,30 @@ export default function Blog( {id} : BlogProps) {
     level: number
   }
 
+  interface ParagraphProps {
+    children: React.ReactNode
+  }
+
   return (
     <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {duration: 0.5}}} exit={{opacity: 0, transition: {duration: 0.5}}}
     className='flex flex-col lg:flex-row'>
       <Menu setTableOpen={setTableOpen} largeScreen={largeScreen}/>
       {!largeScreen && <AnimatePresence>{tableOpen && <Modal setTableOpen={setTableOpen} markdownRef={markdownRef}></Modal>}</AnimatePresence>}
-      <div className="markdown-container ml-2 mt-2 p-5 overflow-scroll h-screen scroll-smooth" ref={markdownRef}>
+      <div className="ml-2 mt-2 p-5 overflow-scroll h-screen scroll-smooth" ref={markdownRef}>
         <ReactMarkdown children={content} components={{
+          h1: ( props : HeadingProps ) => {
+            const heading = Array.isArray(props.children) ? props.children[0] : props.children
+            if (isString(heading)) {
+              const slug = generateSlug(heading)
+              return <h1 className='text-5xl font-bold mb-5 pt-3' id={slug}>{heading}</h1>
+            }
+            return <h1>{props.children}</h1>
+          },
           h2: ( props : HeadingProps ) => {
             const heading = Array.isArray(props.children) ? props.children[0] : props.children
             if (isString(heading)) {
               const slug = generateSlug(heading)
-              return <h2 className='pt-3 border-b-4 border-zinc-800' id={slug}>{heading}</h2>
+              return <h2 className='text-3xl font-bold my-2 pt-3 border-b-4 border-zinc-800' id={slug}>{heading}</h2>
             }
             return <h2>{props.children}</h2>
           },
@@ -73,9 +85,16 @@ export default function Blog( {id} : BlogProps) {
             const heading = Array.isArray(props.children) ? props.children[0] : props.children
             if (isString(heading)) {
               const slug = generateSlug(heading)
-              return <h3 className='mt-3' id={slug}>{heading}</h3>
+              return <h3 className='text-xl font-bold mt-3' id={slug}>{heading}</h3>
             }
-            return <h3 className='mt-3'>{props.children}</h3>
+            return <h3>{props.children}</h3>
+          },
+          p: ( props: ParagraphProps ) => {
+            const content = Array.isArray(props.children) ? props.children[0] : props.children
+            if (isString(content)) {
+              return <p className="text-sm leading-relaxed">{content}</p>
+            }
+            return <p>{props.children}</p>
           }
         }}/>
       </div>
