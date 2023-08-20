@@ -5,7 +5,6 @@ import * as postsJSON from '../../posts/posts.json'
 export default function List() {
 
   const posts = postsJSON["posts"]
-  console.log(posts)
 
   return (
     <>

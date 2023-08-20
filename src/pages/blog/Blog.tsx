@@ -4,14 +4,26 @@ import Menu from "./Menu"
 import Modal from "./Modal"
 import { AnimatePresence, motion } from "framer-motion"
 import Sidebar from "./Sidebar"
+import  { parseMarkdownWithYamlFrontmatter } from './FrontMatterParser'
+import date from '../../assets/images/date.svg'
+import folder from '../../assets/images/folder.svg'
+import circle from '../../assets/images/circle.svg'
 
 interface BlogProps {
   id: string
 }
 
+type MarkdownFrontmatter = {
+  title?: string,
+  date?: string,
+  description?: string,
+  category? : string
+}
+
 export default function Blog( {id} : BlogProps) {
 
   const [content, setContent] = useState('')
+  const [data, setData] = useState<MarkdownFrontmatter>({})
   const [tableOpen, setTableOpen] = useState(false)
   const markdownRef = useRef<HTMLDivElement>(null)
   const [largeScreen, setLargeScreen] = useState(window.matchMedia("(min-width: 1024px)").matches)
@@ -23,13 +35,12 @@ export default function Blog( {id} : BlogProps) {
     .addEventListener('change', e => setLargeScreen( e.matches ));
     const path = `../../posts/${id}.md`
     import(path)
-    /*.then(res => {
-        console.log(res)
-        setContent(res.default)
-    }*/
     .then(res => res.default)
     .then(res => {
-      setContent(res)
+      const {content, ...frontmatter} = parseMarkdownWithYamlFrontmatter<MarkdownFrontmatter>(res)
+      setContent(content)
+      setData(frontmatter)
+      console.log(frontmatter)
     })
     .catch(error => console.error("Error loading markdown file: ", error))
   }, [])
@@ -59,16 +70,23 @@ export default function Blog( {id} : BlogProps) {
 
   return (
     <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {duration: 0.5}}} exit={{opacity: 0, transition: {duration: 0.5}}}
-    className='flex flex-col lg:flex-row'>
+    className='flex flex-col lg:flex-row items-center'>
       <Menu setTableOpen={setTableOpen} largeScreen={largeScreen}/>
       {!largeScreen && <AnimatePresence>{tableOpen && <Modal setTableOpen={setTableOpen} markdownRef={markdownRef}></Modal>}</AnimatePresence>}
       <div className="ml-2 mt-2 p-5 overflow-scroll h-screen scroll-smooth" ref={markdownRef}>
+        <div className='flex flex-col items-center mb-5'>
+          {data.title && <h1 className='text-4xl lg:text-5xl font-bold pt-3 text-center'>{data.title}</h1>}
+          <span className='flex flex-row items-center'>
+            {data.date && <><img src={date} alt='date' className='h-4 mr-2 mb-1'/><p>{data.date}</p></>}
+            {data.category && <><img className='h-1 mx-10' src={circle} alt='circle'/><img src={folder} alt='folder' className='h-4 mr-2 mb-1'/><p>{data.category}</p></>}
+          </span>
+        </div>
         <ReactMarkdown children={content} components={{
           h1: ( props : HeadingProps ) => {
             const heading = Array.isArray(props.children) ? props.children[0] : props.children
             if (isString(heading)) {
               const slug = generateSlug(heading)
-              return <h1 className='text-5xl font-bold mb-5 pt-3' id={slug}>{heading}</h1>
+              return <h1 className='text-4xl lg:text-5xl font-bold mb-5 pt-3 text-center' id={slug}>{heading}</h1>
             }
             return <h1>{props.children}</h1>
           },
@@ -76,7 +94,7 @@ export default function Blog( {id} : BlogProps) {
             const heading = Array.isArray(props.children) ? props.children[0] : props.children
             if (isString(heading)) {
               const slug = generateSlug(heading)
-              return <h2 className='text-3xl font-bold my-2 pt-3 border-b-4 border-zinc-800' id={slug}>{heading}</h2>
+              return <h2 className='text-2xl lg:text-3xl font-bold my-2 pt-3 border-b-4 border-zinc-800' id={slug}>{heading}</h2>
             }
             return <h2>{props.children}</h2>
           },
@@ -91,7 +109,7 @@ export default function Blog( {id} : BlogProps) {
           p: ( props: ParagraphProps ) => {
             const content = Array.isArray(props.children) ? props.children[0] : props.children
             if (isString(content)) {
-              return <p className="text-sm leading-relaxed">{content}</p>
+              return <p className="text-sm leading-relaxed text-slate-500 tracking-widest">{content}</p>
             }
             return <p>{props.children}</p>
           }

@@ -39,7 +39,7 @@ export default function Post( {title, id, description, status, nested} : PostPro
           <h1 className='font-bold text-xl text-left'>{title}</h1>
           <h1 className={'tracking-widest ml-3 mr-2 ' + color}>{status}</h1>
         </div>
-        <p className='text-left mb-2'>{description}</p>
+        <p className='text-left mb-2 text-slate-400'>{description}</p>
       </button>
     </li>
   )

@@ -4,6 +4,7 @@
   "id" : "fighting-game-analysis-engine",
   "description" : "An analysis engine for Guilty Gear Strive (GGST). Analysis engines are common in chess, where they rate each players moves; I built it for a similar purpose in GGST.",
   "status" : "COMPLETE",
+  "date" : "9th Aug, 2023",
   "nestedPosts" : []
 },
 {
@@ -11,6 +12,7 @@
   "id" : "music-humanisation",
   "description" : "A system to produce human sounding music, given a score and some instructions on how to play it (e.g. fast, slow, vibrant), using a neural network.",
   "status" : "COMPLETE",
+  "date" : "17th Aug, 2023",
   "nestedPosts" : []
 },
 {
@@ -18,12 +20,14 @@
   "id" : "maio",
   "description" : "A collection of mental health resources and tools in one place, to make managing mental health simpler.",
   "status" : "PLANNED",
+  "date" : "21st Aug, 2023 - 27th September, 2023",
   "nestedPosts" : [
     {
       "title" : "MAIO part 1",
       "id" : "maio-part-1",
       "description" : "Planning and scoping the project.",
       "status" : "COMPLETE",
+      "date" : "21st Aug, 2023",
       "nested" : true
     }
   ]
