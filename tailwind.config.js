@@ -7,7 +7,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        "darkmetal": "#1c1c1c"
+        darkmetal: "#1c1c1c"
+      },
+      listStyleImage: {
+        "dash" : "url(./assets/images/dash.svg)"
       }
     },
   }

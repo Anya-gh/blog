@@ -4,13 +4,14 @@ title: Music Humanisation
 date: 17th Aug, 2023
 description: A system to produce human sounding music, given a score and some instructions on how to play it (e.g. fast, slow, vibrant), using a neural network.
 category: Projects
+status: COMPLETE
 ---
 
 Given a score of music in some digital format, playing back a piece is trivial for computers. However, they struggle to induce the same tempo (changes in timing) and dynamics (changes in force or volume) that a human naturally exhibits. This causes playback from computers to sound robotic. In addition, scores usually include instructions from the composer as to how the performance of the piece should be played; these are often in Latin, and can have a dramatic effect on how the piece sounds overall. Computers fail to take this into account, and thus are incomparable to human players. A music humanisation system aims to solve this problem, by playing back a piece the way a human would with the capability to take instructions into account.
 
 This project was a group project I completed in my 4th year with other university students on my course. In this post, I’ll go over my experience working on it and what I learned in the process. If you’d like to read the full report, you can find that here.
 
-The idea for this project was proposed by a peer of mine, and I thought it had a great capacity for machine learning solutions, which I wanted to develop my skills with. I learnt not to jump into a project just because it sounded interesting, but, as I explain in the following section, there was good reason to believe this was feasible.
+The idea for this project was proposed by a peer of mine, and I thought it had a great capacity for machine learning solutions, which I wanted to develop my skills with. I learnt not to jump into a project just because it sounded interesting, but, as I explain in the following section, there was good reason to believe this was feasible. sfsfs
 
 ## Motivation
 

@@ -31,7 +31,7 @@ export default function Blog( {id} : BlogProps) {
 
   useEffect(() => {
     window
-    .matchMedia("(min-width: 768px)")
+    .matchMedia("(min-width: 1024px)")
     .addEventListener('change', e => setLargeScreen( e.matches ));
     const path = `../../posts/${id}.md`
     import(path)
@@ -59,12 +59,11 @@ export default function Blog( {id} : BlogProps) {
     return typeof value === 'string'
   }
 
-  interface HeadingProps {
-    children: React.ReactNode,
+  type HeadingProps = ElementProps & {
     level: number
   }
 
-  interface ParagraphProps {
+  type ElementProps = {
     children: React.ReactNode
   }
 
@@ -73,7 +72,7 @@ export default function Blog( {id} : BlogProps) {
     className='flex flex-col lg:flex-row items-center'>
       <Menu setTableOpen={setTableOpen} largeScreen={largeScreen}/>
       {!largeScreen && <AnimatePresence>{tableOpen && <Modal setTableOpen={setTableOpen} markdownRef={markdownRef}></Modal>}</AnimatePresence>}
-      <div className="ml-2 mt-2 p-5 overflow-scroll h-screen scroll-smooth" ref={markdownRef}>
+      <div className="ml-2 mt-2 p-5 overflow-scroll h-screen scroll-smooth flex-grow" ref={markdownRef}>
         <div className='flex flex-col items-center mb-5'>
           {data.title && <h1 className='text-4xl lg:text-5xl font-bold pt-3 text-center'>{data.title}</h1>}
           <span className='flex flex-row items-center'>
@@ -81,12 +80,12 @@ export default function Blog( {id} : BlogProps) {
             {data.category && <><img className='h-1 mx-10' src={circle} alt='circle'/><img src={folder} alt='folder' className='h-4 mr-2 mb-1'/><p>{data.category}</p></>}
           </span>
         </div>
-        <ReactMarkdown children={content} components={{
+        <ReactMarkdown className='self-center' children={content} components={{
           h1: ( props : HeadingProps ) => {
             const heading = Array.isArray(props.children) ? props.children[0] : props.children
             if (isString(heading)) {
               const slug = generateSlug(heading)
-              return <h1 className='text-4xl lg:text-5xl font-bold mb-5 pt-3 text-center' id={slug}>{heading}</h1>
+              return <h1 className='text-4xl lg:text-5xl font-bold mb-5 pt-3 text-center' id={slug}>{props.children}</h1>
             }
             return <h1>{props.children}</h1>
           },
@@ -94,7 +93,7 @@ export default function Blog( {id} : BlogProps) {
             const heading = Array.isArray(props.children) ? props.children[0] : props.children
             if (isString(heading)) {
               const slug = generateSlug(heading)
-              return <h2 className='text-2xl lg:text-3xl font-bold my-2 pt-3 border-b-4 border-zinc-800' id={slug}>{heading}</h2>
+              return <h2 className='text-2xl lg:text-3xl font-bold my-2 pt-3 border-b-4 border-zinc-800' id={slug}>{props.children}</h2>
             }
             return <h2>{props.children}</h2>
           },
@@ -102,20 +101,25 @@ export default function Blog( {id} : BlogProps) {
             const heading = Array.isArray(props.children) ? props.children[0] : props.children
             if (isString(heading)) {
               const slug = generateSlug(heading)
-              return <h3 className='text-xl font-bold mt-3' id={slug}>{heading}</h3>
+              return <h3 className='text-xl font-bold mt-3' id={slug}>{props.children}</h3>
             }
             return <h3>{props.children}</h3>
           },
-          p: ( props: ParagraphProps ) => {
-            const content = Array.isArray(props.children) ? props.children[0] : props.children
-            if (isString(content)) {
-              return <p className="text-sm leading-relaxed text-slate-500 tracking-widest">{content}</p>
-            }
-            return <p>{props.children}</p>
+          p: ( props: ElementProps ) => {
+              return <p className="leading-relaxed text-zinc-400 tracking-wide">{props.children}</p>
+          },
+          ul: ( props: ElementProps ) => {
+            return <ul className="list-inside list-image-dash my-2">{props.children}</ul>
+          },
+          ol: ( props: ElementProps ) => {
+            return <ol className='list-inside list-decimal marker:text-white my-2'>{props.children}</ol>
+          },
+          li: ( props: ElementProps ) => {
+              return <li className="leading-relaxed text-zinc-400 tracking-wide ml-5">{props.children}</li>
           }
         }}/>
       </div>
-      {largeScreen && <AnimatePresence mode='wait'>{tableOpen && <Sidebar markdownRef={markdownRef} setTableOpen={setTableOpen}/>}</AnimatePresence>}
+      {largeScreen && <AnimatePresence mode='wait'>{tableOpen &&<Sidebar markdownRef={markdownRef} setTableOpen={setTableOpen}/>}</AnimatePresence>}
     </motion.div>
   )
 }

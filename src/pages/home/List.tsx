@@ -1,18 +1,46 @@
 import Post from './Post'
 import Folder from './Folder'
-import * as postsJSON from '../../posts/posts.json'
+import { default as postsJSON } from '../../posts/posts.json'
+import { motion, AnimatePresence } from 'framer-motion'
 
-export default function List() {
+export type nestedPostType = {
+  title: string,
+  id: string,
+  description: string,
+  date: string,
+  category: string,
+  status: string
+}
 
-  const posts = postsJSON["posts"]
+export type PostType = nestedPostType & {
+  nestedPosts?: nestedPostType[]
+}
+
+type ListProps = {
+  activeCategory: string
+}
+
+export default function List( {activeCategory} : ListProps) {
+
+  const posts: PostType[] = postsJSON
 
   return (
     <>
     <div>
       <ul className="list-none mb-10">
+        <AnimatePresence>
         {posts.map(post => {
-        return (post.nestedPosts.length > 0 ? <Folder title={post.title} id={post.id} description={post.description} status={post.status} nestedPosts={post.nestedPosts}/> : <Post title={post.title} id={post.id} description={post.description} status={post.status} nested={false}/>)
-        })}
+          console.log(activeCategory)
+          console.log()
+          if ((activeCategory === 'all') || (post.category.toLowerCase() === activeCategory.toLowerCase())) {
+            return ( 
+              <motion.li key={post.id} initial={{opacity: 0, height: 0}} animate={{opacity: 1, height: "auto"}} exit={{opacity: 0, height: 0}}>
+                {post.nestedPosts ? <Folder title={post.title} id={post.id} description={post.description} status={post.status} date={post.date} category={post.category} nestedPosts={post.nestedPosts}/> : <Post title={post.title} id={post.id} description={post.description} category={post.category} date={post.date} status={post.status} nested={false}/>}
+              </motion.li>
+            )
+          }})
+        }
+        </AnimatePresence>
       </ul>
     </div>
     </>

@@ -1,6 +1,11 @@
 export default `
-
-# Fighting Game Analysis Engine
+---
+title: Fighting Game Analysis Engine
+description: An analysis engine for Guilty Gear Strive (GGST). Analysis engines are common in chess, where they rate each players moves; I built it for a similar purpose in GGST.
+status: COMPLETE
+date: 9th Aug, 2023
+category: Projects
+---
 
 Analysis engines are tools to get better at games; each action is given a score, which lets players identify their mistakes (if an action they made has a poor score, then it's a mistake), and shows them what they should have done instead. These are very common in chess, but I wanted to apply them to my favourite genre: fighting games. Many people like the idea of fighting games but struggle to get started due to the difficulty, and I wanted to use analysis engines as a means to help those players. The game I picked to develop it for was Guilty Gear Strive. Fighting games don't have turns, but actions can be still be thought of as objectively 'good' or 'bad', albeit with less certainty.
 
