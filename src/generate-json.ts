@@ -63,17 +63,22 @@ const generateJsonData = (folderPath:string) => {
     if (fs.lstatSync(filePath).isDirectory()) {
       const nested: Metadata[] = []
       let metaData: Post = {title: fileName, id: fileName.replaceAll(' ', '-').toLowerCase(), description: '', status: '', date: '', category: '', theme: undefined, nestedPosts: nested}
+      const jsonFilePath = `${filePath}/${fileName}.json`
+      if (fs.existsSync(jsonFilePath)) {
+        const data = JSON.parse(fs.readFileSync(jsonFilePath, 'utf-8')) as Metadata
+        metaData = {title: data.title, id: data.title.replaceAll(' ', '-').toLowerCase(), description: data.description, status: data.status, date: data.date, category: data.category, theme: data.theme, nestedPosts: nested}
+        }
+      else {
+        throw new InvalidFileType(`Folder without JSON file found at ${filePath}. Please create a JSON file named ${fileName}.json for this folder.`)
+      }
       fs.readdirSync(filePath).forEach(nestedFileName => {
         const nestedFilePath = `${filePath}/${nestedFileName}`
         if (fs.lstatSync(nestedFilePath).isDirectory()) {
           throw new InvalidFileType('Nested folder found. Files should only be nested up to one level.')
-        }
-        if (path.extname(nestedFileName) === '.json') {
-          const data = JSON.parse(fs.readFileSync(nestedFilePath, 'utf-8')) as Metadata
-          metaData = {title: data.title, id: data.title.replaceAll(' ', '-').toLowerCase(), description: data.description, status: data.status, date: data.date, category: data.category, theme: data.theme, nestedPosts: nested}
-        }
+        } 
         else if (path.extname(nestedFileName) === '.md') {
           const fileMetaData = getJsonData(nestedFilePath)
+          fileMetaData.theme = metaData.theme
           nested.push(fileMetaData)
         }
       })

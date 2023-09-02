@@ -5,7 +5,7 @@ import folder from '../../assets/images/folder.svg'
 import dropdown from '../../assets/images/dropdown.svg'
 import { nestedPostType } from './List'
 import circle from '../../assets/images/circle.svg'
-import { bgs } from './List'
+import { themes } from '../../components/Themes'
 
 type FolderProps = nestedPostType & {
   nestedPosts: nestedPostType[]
@@ -18,11 +18,11 @@ export default function Folder( {title, id, description, date, category, status,
   const [bg, setBg] = useState('')
 
   useEffect(() => {
-    if (theme) {
-      setBg(bgs[theme])
+    if (theme && themes[theme] !== undefined) {
+      setBg(themes[theme])
     }
     else {
-      setBg(bgs['temp'])
+      setBg(themes['temp'])
     }
     switch(status) {
       case "IN PROGRESS": 
@@ -39,7 +39,7 @@ export default function Folder( {title, id, description, date, category, status,
 
   return (
     <>
-      <div className={`rounded-lg mb-2 w-80 md:w-[35rem] lg:w-[50rem] flex flex-col ${bg}`}>
+      <div className={`rounded-lg mb-4 w-80 md:w-[35rem] lg:w-[50rem] flex flex-col ${bg}`}>
         <div className='bg-black bg-opacity-50 p-2 rounded-lg'>
           <div className='flex flex-col mb-1'>
               <div className='flex flex-row justify-between'>

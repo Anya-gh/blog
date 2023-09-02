@@ -3,16 +3,6 @@ import Folder from './Folder'
 import { default as postsJSON } from '../../posts/posts.json'
 import { motion, AnimatePresence } from 'framer-motion'
 
-interface StringMap {
-  [key: string]: string;
-}
-
-export const bgs: StringMap = {
-  sunset: `bg-[url('./assets/bgs/sunset.jpg')] bg-cover bg-center`,
-  piano: `bg-[url('./assets/bgs/person-playing-piano.jpg')] bg-cover bg-center`,
-  temp : `bg-[url('./assets/bgs/pexels-tirachard-kumtanom-733856.jpg')] bg-cover bg-center`
-}
-
 export type nestedPostType = {
   title: string,
   id: string,
