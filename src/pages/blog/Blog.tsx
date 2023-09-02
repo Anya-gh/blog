@@ -17,7 +17,8 @@ type MarkdownFrontmatter = {
   title?: string,
   date?: string,
   description?: string,
-  category? : string
+  category? : string,
+  theme? : string
 }
 
 export default function Blog( {id} : BlogProps) {
@@ -34,7 +35,7 @@ export default function Blog( {id} : BlogProps) {
     .matchMedia("(min-width: 1024px)")
     .addEventListener('change', e => setLargeScreen( e.matches ));
     const path = `../../posts/${id}.md`
-    import(path)
+    import(path /* @vite-ignore */)
     .then(res => res.default)
     .then(res => {
       const {content, ...frontmatter} = parseMarkdownWithYamlFrontmatter<MarkdownFrontmatter>(res)

@@ -10,7 +10,11 @@ export default {
         darkmetal: "#1c1c1c"
       },
       listStyleImage: {
-        "dash" : "url(./assets/images/dash.svg)"
+        dash: "url(./assets/images/dash.svg)"
+      },
+      backgroundImage: {
+        piano: "url('./assets/bgs/person-playing-piano.jpg')",
+        sunset: "url('./assets/bgs/sunset.jpg')"
       }
     },
   }
