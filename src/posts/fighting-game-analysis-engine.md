@@ -5,13 +5,15 @@ description: An analysis engine for Guilty Gear Strive (GGST). Analysis engines 
 status: COMPLETE
 date: 9th Aug, 2023
 category: Projects
+theme: ggst
+credit: All credit goes to Arc System Works for the background image.
 ---
 
 Analysis engines are tools to get better at games; each action is given a score, which lets players identify their mistakes (if an action they made has a poor score, then it's a mistake), and shows them what they should have done instead. These are very common in chess, but I wanted to apply them to my favourite genre: fighting games. Many people like the idea of fighting games but struggle to get started due to the difficulty, and I wanted to use analysis engines as a means to help those players. The game I picked to develop it for was Guilty Gear Strive. Fighting games don't have turns, but actions can be still be thought of as objectively 'good' or 'bad', albeit with less certainty.
 
 ## What is a fighting game?
 
-Fighting games are traditionally 1v1 multiplayer competitive games; both players control a character, with the objective being to reduce your opponent's character's HP (health points) to 0, by attacking them. Each character has strengths and weaknesses: some are best up close, whilst some prefer being as far away as possible. Each character can perform different attacks, and the primary objective of the game is to guess which attacks your opponent will use. Every attack has a counter attack, like rock-paper-scissors; the challenge is in guessing correctly, which experienced players do by understanding the situation, the characters, and their opponents habits. These games are designed this way because fighting games aren't turn based; you can't see your opponent's attack before responding with your own, you have to guess and attack appropriately. In addition to attacks, there are lots of different things a character can do (such as dashing and jumping), so we use the term "options" analogously to how the term "moves" is used in chess. 
+Fighting games are traditionally 1v1 multiplayer competitive games; both players control a character, with the objective being to reduce your opponent's character's HP (health points) to 0, by attacking them. Each character has strengths and weaknesses: some are best up close, whilst some prefer being as far away as possible. Each character can perform different attacks, and the primary objective of the game is to guess which attacks your opponent will use. Every attack has a counter attack, like rock-paper-scissors; the challenge is in guessing correctly, which experienced players do by understanding the situation, the characters, and their opponents habits. These games are designed this way because fighting games aren't turn based; you can't see your opponent's attack before responding with your own, you have to guess and attack appropriately. In addition to attacks, there are lots of different things a character can do (such as dashing and jumping), so we use the term "options" analogously to how the term "moves" is used in chess.
 
 ## Motivation
 
@@ -19,27 +21,49 @@ Fighting games are very close to my heart, and I’ve loved them since I played 
 
 Some of this is inevitable; fighting games aren’t for everyone. However, lots of people love the idea of fighting games, they just can’t see themselves overcoming that initial struggle. The idea to develop an analysis engine for fighting games came from my time learning chess.
 
-During the lockdown, my friends and I started playing chess. We’re all competitive, and so we were all trying to get better as fast as we could. Most chess websites, including the one we were using, allow you to go back and watch your replays with an analysis engine. It’s purpose is to score each move at each turn - this allows you to see clearly where you’ve made mistake, why it was a mistake and what you should have done instead. This is useful for every level of player, but especially useful for new players, because it means you don’t have to spend hours studying theory; you can jump in and play some matches, and learn from your mistakes as you go along. 
+During the lockdown, my friends and I started playing chess. We’re all competitive, and so we were all trying to get better as fast as we could. Most chess websites, including the one we were using, allow you to go back and watch your replays with an analysis engine. It’s purpose is to score each move at each turn - this allows you to see clearly where you’ve made mistake, why it was a mistake and what you should have done instead. This is useful for every level of player, but especially useful for new players, because it means you don’t have to spend hours studying theory; you can jump in and play some matches, and learn from your mistakes as you go along.
 
 Fighting games are quite different to chess, but similar in the way you think about what options are best. I thought a similar thing could work, so I decided on it as my 3rd year project at university.
 
-## Design
+## Overview
 
-In chess, analysis engines are fairly simple; there's a set of moves that can be played in any given position, and a score is given to each move. Fortunately, something similar can be done for fighting games. By displaying the score for each option, the player can use this information to determine whether the option they chose was a mistake or not. However, assigning these scores is a little less straightforward. In chess, if a move has a response that causes the game to swing in the opponent's favour, it's a bad move regardless of how difficult the response is to find. The same is not true in fighting games; every option has a counter. Instead, we want to prefer options which have unlikely counters. Some counters are less likely than others depending on the situation; if an option is a counter to only a single option, but is countered itself by all the other good options the opponent has, it's not a very good counter, so it's unlikely the opponent will use it. As such, it's sufficient to design an analysis engine that simply finds the likeliness of any option being chosen assuming optimal play. The more likely an option is, the better it is, and this it directly correlates to its score.
+For this project, I chose Guilty Gear Strive (GGST) as the fighting game. There were three parts to this project: gathering data, designing the system and training a machine learning model.
 
-Rather than decide on a machine learning model at this point, I knew I could just test a number of different models and pick the best one, so I didn’t need to commit to a single one. The input to these models would be the same anyway, so knowing which models I’d be using in advance wasn’t really necessary.
+### Reading memory to generate data
 
-Data was the real issue. I knew this would be an issue since I’d have to scrape it from in-game replays, and I wasn’t sure how much I could get. I knew I wouldn’t have enough for a neural network. Since the game has no API, I planned to read the game’s memory addresses for all the information about the current state of the game, and use this to create a state that could be used as input for the machine learning models, with the output being each option and its score.
+Like with most machine learning projects, data was the main issue. Since the game had no API, I had to manually extract the necessary data by reading the game's memory as it was running. This was a tedious process. I wanted, for every frame of the game, to know what was happening in the game, which is encoded in a set of key values (such as both players' positions). Each value has its own address in memory, that has to be found separately. To do this, one has to change the value (for instance with character position one of the characters would be moved in-game) and observe the memory addresses to see which memory addresses changed. After doing this enough times, there should only be one address left; the one that you are looking for.
 
-## Implementation
+In reality, this was not the case most of the time. There were a number of addresses that would change seemingly arbitrarily, or would change because of the value I was looking for but not contain the value itself. I did eventually get all the values, but it took up a large portion of the time I had for the project. 
 
-The first thing to implement was the scraper. This, unfortunately, was also what took most of my time. I had two terms (4/5 months) to complete the project, and so I wasn’t able to do everything I wanted in the aim of meeting the objectives I had set. The issue was that for every value of the state I needed, I had to find the relevant memory address. This involves changing that value in-game, watching the memory addresses to see which had changed, and repeating until there was only the correct memory address left. In reality, this isn’t how it went; for the value that represented the state that a character was in (e.g. using an attack, jumping etc.), even after repeating this process multiple times there were still hundreds of memory addresses to sift through. I ended up having to pick one at random hoping it would work, and then try again if it didn’t.
+To generate data, I used an in-game feature to play replays from high-level players in game, and ran my memory scraper in the background. The amount of data I was able to generate this way was limited, unfortunately.
 
-On the contrary, implementing the machine learning models was very simple; Python offers a wide variety of great machine learning libraries, like PyTorch and Scikit-learn. I used the latter, since I wasn’t using neural networks.
+### Designing the system
 
-## Learnings
+For the purposes of this post, whenever I use the term 'option', assume it to mean an action a player can take in any generic fighting game (e.g. moving back and forth).
 
-The most important lesson I learnt from this project was in scoping out the project. I didn’t consider how big an issue gathering data in this way would be. When I went to go and implement the scraper, it was a few weeks before I was even able to write any code, as I just spent that time trying to understand what I needed to do. In the end, the scraper was the least interesting part as well. Had I picked a game that was more friendly to third-party applications (such as Rivals of Aether), I would have been able to spend more of my time focusing on what mattered. Data will always be an issue, but it’s good practice to do what’s possible to mitigate it as best as possible. Ultimately, things like this are a matter of experience, and I’m glad to have it now as to not make the same mistake in the future.
+Unlike chess, where it is not clear how good or bad a move is due to late rewards on actions, in fighting games, it's usually pretty clear whether it was good or bad in hindsight - if it hit them, then it was a good action to take.
 
-Otherwise, I’m still proud of this project overall. I was very happy with the final report I produced, which did quite well (achieved a first), and the design I came up with was novel in some important ways. As much as I’d like to take a stab at this again in the future, I don’t think I’ll be doing so unless I ever find a fighting game I enjoy that’s also friendly to hobbyist programmers like me, simply because there’re projects I’d rather be working on.
+Unfortunately, I couldn't take advantage of this. The data I had simply wasn't rich enough to track whether an option resulted in a good outcome, because there are many possible 'good outcomes', and I didn't have access to the data that would let me see them. Instead, I opted to simply track which options were being used by the best players in which states. As such, the machine learning function being learned was one mapping from the game state to a ranking of different options; this ranking could be interpreted as the likeliness of that option being used. 
+
+### Choosing the right machine learning model
+
+At this stage in time, I had no experience with machine learning, and naturally no experience with neural networks either. I talked to my supervisor, and they recommended that I stick to simple machine learning models. This made sense since I wasn't able to generate much data as well.
+
+Given the machine learning function, logistic regression was an obvious standout, since the problem involved mapping to a set of probabilities. However, since the models were fairly quick to train, I tested a number of different models, and compared the results.
+
+## Evaluation
+
+This was a university project, and the aim wasn't to create the system I set out to make; it was simply to demonstrate that I was capable of undertaking such a project, and make good progress in every meaningful aspect of that undertaking. Despite the system not being where I wanted it to due to a lack of data, I achieved a first overall with my dissertation, so I was happy with the result, though I do think things could have gone better in a lot of aspects.
+
+### Choosing a project
+
+To some degree, I think the data problem was inevitable; the game I chose had no API, and memory reading is naturally far from ideal. I chose GGST since it was a game I personally liked a lot at the time, rather than one that i thought would be a good fit. Had I chose a game that had an API with this data available, the project would have been much smoother.
+
+### Working in isolation
+
+I think another big issue I had with the project was that it was entirely my own project. When I got stuck, there was no one to go to, since no one was doing the same project I was. That said, I still think there's a lot of value in getting input from peers even if they aren't completely involved. Simply sharing ideas can spark new ones, and this is something I've kept in mind since.
+
+## Conclusion
+
+Though the project was received well overall and I achieved a good grade, I wasn't very happy personally with how it went. It wasn't what I envisioned, and the process was not particularly enjoyable. It was an important learning experience however, and certainly made me more confident going forward.
 `;

@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import Sidebar from "./Sidebar"
 import  { parseMarkdownWithYamlFrontmatter } from './FrontMatterParser'
 import Banner from "./Banner"
+import Footer from "../../components/Footer"
 
 interface BlogProps {
   id: string
@@ -15,8 +16,8 @@ type MarkdownFrontmatter = {
   title?: string,
   date?: string,
   description?: string,
-  category? : string,
-  theme? : string
+  category?: string,
+  theme?: string,
 }
 
 export default function Blog( {id} : BlogProps) {
@@ -66,13 +67,17 @@ export default function Blog( {id} : BlogProps) {
     children: React.ReactNode
   }
 
+  type AnchorProps = ElementProps & {
+    href?: string | undefined
+  }
+
   return (
     <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {duration: 0.5}}} exit={{opacity: 0, transition: {duration: 0.5}}} className="flex flex-col items-center">
-      <div className='flex flex-col items-center h-screen w-80 lg:w-[60rem] mx-10'>
+      <div className='flex flex-col items-center w-80 lg:w-[60rem] mx-10'>
         {/*<Menu setTableOpen={setTableOpen} largeScreen={largeScreen}/>*/}
         {data.title && data.date && <Banner title={data.title} date={data.date} theme={data.theme} setTableOpen={setTableOpen}/>}
         {!largeScreen && <AnimatePresence>{tableOpen && <Modal setTableOpen={setTableOpen} markdownRef={markdownRef}></Modal>}</AnimatePresence>}
-        <div className="flex flex-row h-screen overflow-scroll scroll-smooth mb-10">
+        <div className="flex flex-row scroll-smooth mb-10">
           <div className="ml-2" ref={markdownRef}>
             <ReactMarkdown className='' children={content} components={{
               h1: ( props : HeadingProps ) => {
@@ -100,7 +105,7 @@ export default function Blog( {id} : BlogProps) {
                 return <h3>{props.children}</h3>
               },
               p: ( props: ElementProps ) => {
-                  return <p className="leading-relaxed text-gray-400 font-light tracking-wider">{props.children}</p>
+                  return <p className="leading-relaxed text-gray-300 font-light text-sm tracking-wider">{props.children}</p>
               },
               ul: ( props: ElementProps ) => {
                 return <ul className="list-inside list-image-dash my-2">{props.children}</ul>
@@ -109,12 +114,16 @@ export default function Blog( {id} : BlogProps) {
                 return <ol className='list-inside list-decimal marker:text-white my-2'>{props.children}</ol>
               },
               li: ( props: ElementProps ) => {
-                  return <li className="leading-relaxed text-gray-400 font-light tracking-wider ml-5">{props.children}</li>
+                  return <li className="leading-relaxed text-gray-300 font-light text-sm tracking-wider ml-5">{props.children}</li>
+              },
+              a: ( props: AnchorProps ) => {
+                return <a href={props.href} className='text-sky-400'>{props.children}</a>
               }
             }}/>
           </div>
           {largeScreen && <AnimatePresence mode='wait'>{tableOpen &&<Sidebar markdownRef={markdownRef} setTableOpen={setTableOpen}/>}</AnimatePresence>}
         </div>
+        <Footer />
       </div>
     </motion.div>
   )

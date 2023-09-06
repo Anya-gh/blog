@@ -14,15 +14,18 @@ type FolderProps = nestedPostType & {
 export default function Folder( {title, id, description, date, category, status, nestedPosts, theme} : FolderProps ) {
 
   const [showPosts, setShowPosts] = useState(false)
+  const [credit, setCredit] = useState<string | undefined>(undefined)
   const [color, setColor] = useState('')
   const [bg, setBg] = useState('')
 
   useEffect(() => {
     if (theme && themes[theme] !== undefined) {
-      setBg(themes[theme])
+      setBg(themes[theme].style)
+      setCredit(themes[theme].credit)
     }
     else {
-      setBg(themes['temp'])
+      setBg(themes['temp'].style)
+      setCredit(themes['temp'].credit)
     }
     switch(status) {
       case "IN PROGRESS": 
@@ -48,7 +51,10 @@ export default function Folder( {title, id, description, date, category, status,
               </div>
               <span className='flex flex-row items-center tracking-widest text-gray-400'><p>{date}</p><img src={circle} className='h-1 mx-5' alt='circle'/><p>{category}</p></span>
           </div>
-          <p className='text-left mb-2 text-gray-300'>{description}</p>
+          <p className='text-left text-gray-300'>{description}</p>
+          <div className='mb-2'>
+            {credit && <p className='text-left text-sm text-gray-400'>{credit}</p>}
+          </div>
           <div className='overflow-hidden'>
             <AnimatePresence>
             {showPosts && 

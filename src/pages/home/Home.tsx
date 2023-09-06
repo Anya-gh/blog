@@ -1,9 +1,9 @@
 import List from "./List"
 import { motion } from "framer-motion"
 import Categories from "./Categories"
-import Icons from "./Icons"
 import { useState } from "react"
 import title from '../../assets/images/Title.svg'
+import Footer from "../../components/Footer"
 
 export default function Home() {
 
@@ -17,8 +17,7 @@ export default function Home() {
           <Categories activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>
           <List activeCategory={activeCategory}/>
         </div>
-        <Icons />
-        <p className='pb-10 text-sm tracking-widest text-slate-500 text-center w-80 md:w-full'>Created by me! You can have a look on GitHub <a href="https://github.com/Anya-gh/blog" className='text-slate-300'>here</a>.</p>
+        <Footer />
       </motion.div>
     </>
   )

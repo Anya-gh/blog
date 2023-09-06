@@ -9,8 +9,8 @@ export type nestedPostType = {
   description: string,
   date: string,
   category: string,
-  status: string
-  theme? : string
+  status: string,
+  theme? : string,
 }
 
 export type PostType = nestedPostType & {

@@ -12,14 +12,18 @@ export default function Post( {title, id, description, status, category, date, n
 
   const [color, setColor] = useState('')
   const [bg, setBg] = useState('')
+  const [credit, setCredit] = useState<string | undefined>(undefined)
   const navigate = useNavigate()
 
   useEffect(() => {
+    console.log(credit)
     if (theme && themes[theme] !== undefined) {
-      setBg(themes[theme])
+      setBg(themes[theme].style)
+      setCredit(themes[theme].credit)
     }
     else {
-      setBg(themes['temp'])
+      setBg(themes['temp'].style)
+      setCredit(themes['temp'].credit)
     }
     switch(status) {
       case "IN PROGRESS": 
@@ -47,7 +51,10 @@ export default function Post( {title, id, description, status, category, date, n
               <span className='flex flex-row justify-between'><h1 className='font-bold text-xl text-left'>{title}</h1><h1 className={'tracking-widest ml-3 mr-2 ' + color}>{status}</h1></span>
               <span className='flex flex-row items-center tracking-widest text-gray-400'><p>{date}</p><img src={circle} className='h-1 mx-5' alt='circle'/><p>{category}</p></span>
           </div>
-          <p className='text-left mb-2 text-gray-300'>{description}</p>
+          <p className='text-left text-gray-300'>{description}</p>
+          <div className='mb-2'>
+            {credit && <p className='text-left text-sm text-gray-400'>{credit}</p>}
+          </div>
           </div>
         </button>
       </>
