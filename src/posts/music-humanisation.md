@@ -3,7 +3,7 @@ export default `
 title: Music Humanisation
 date: 17th Aug, 2023
 description: A system to produce human sounding music, given a score and some instructions on how to play it (e.g. fast, slow, vibrant), using a neural network.
-category: Projects
+category: Projects, Machine Learning
 status: COMPLETE
 theme: piano
 ---

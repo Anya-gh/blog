@@ -4,7 +4,7 @@ title: Part 2 (design)
 description: Outlining requirements, defining tasks and deciding a tech stack.
 status: COMPLETE
 date: 13th Sep, 2023
-category: Projects
+category: Projects, Web App
 theme: sunset
 ---
 

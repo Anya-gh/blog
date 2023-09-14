@@ -20,5 +20,10 @@ export const themes: StringMap = {
   ggst: {
     style: `bg-[url('./assets/bgs/ggst.png')] bg-cover bg-center`,
     credit: 'All credit goes to Arc System Works for the background image.'
+  },
+  japan: {
+    style: `bg-[url('./assets/bgs/japan.jpg')] bg-cover bg-center`,
+    credit: `Photo by Su San Lee on Unsplash`
+  
   }
 }

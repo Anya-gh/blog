@@ -42,8 +42,8 @@ export default function Folder( {title, id, description, date, category, status,
 
   return (
     <>
-      <div className={`rounded-lg mb-4 w-80 md:w-[35rem] lg:w-[50rem] flex flex-col ${bg}`}>
-        <div className='bg-black bg-opacity-50 p-2 rounded-lg'>
+      <div className={`rounded-lg mb-4 w-80 md:w-[35rem] lg:w-[50rem] min-h-[7rem] flex flex-col ${bg}`}>
+        <div className='bg-black bg-opacity-50 min-h-[7rem] h-full p-2 rounded-lg'>
           <div className='flex flex-col mb-1'>
               <div className='flex flex-row justify-between'>
                 <span className='flex flex-row items-baseline'><img src={folder} alt='folder' className='h-4 mr-2'/><h1 className='font-bold text-xl'>{title}</h1></span>

@@ -4,7 +4,7 @@ title: Part 2 (UI and UX design)
 description: How I designed the UI and UX for this web application, and all the things I learned regarding UI and UX design.
 status: COMPLETE
 date: 6th Sep, 2023
-category: Projects
+category: Projects, Web App
 ---
 
 Doing proper UI and UX design is really important, but I didn't know how much so before I started working on this project. Until working on this, I had been arbitrarily running through different designs in my head until I landed on one I liked, and then tried to code it. As with most things it's hard to tell when something is a bad idea if it keeps working, as my method had been, so in some ways the time and energy I spent revising designs on this project is something I'm grateful for, because I know the experience will aid me in the future. On the other hand, you should do your best to ensure this isn't how the process goes, so I'm documenting it here.

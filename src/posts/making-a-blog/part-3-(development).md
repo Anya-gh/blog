@@ -4,7 +4,7 @@ title: Part 3 (development)
 description: The development process for making this blog.
 status: COMPLETE
 date: 7th Sep, 2023
-category: Projects
+category: Projects, Web App
 ---
 
 Just like with UI, I got to do a lot of new things on the development side, mainly centred around content management. I'll go through the key steps I went through in making this blog, from bootstrapping to deployment. 

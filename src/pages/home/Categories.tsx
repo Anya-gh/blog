@@ -13,8 +13,8 @@ export default function Categories( {activeCategory, setActiveCategory} : Catego
         <Category name='All' activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>
         <Category name='Projects' activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>
         <Category name='Achievements' activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>
-        <Category name='Web apps' activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>
-        <Category name='Machine learning' activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>
+        <Category name='Web App' activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>
+        <Category name='Machine Learning' activeCategory={activeCategory} setActiveCategory={setActiveCategory}/>
       </div>
   )
 }

@@ -4,7 +4,7 @@ title: Part 1 (getting started)
 description: Scoping the project, deciding the tech stack and outlining some basic requirements.
 status: COMPLETE
 date: 9th Sep, 2023
-category: Projects
+category: Projects, Web App
 theme: sunset
 ---
 

@@ -4,7 +4,7 @@ title: Part 1 (planning)
 description: The process I went through before writing any code or starting development for this blog.
 status: COMPLETE
 date: 5th Sep, 2023
-category: Projects
+category: Projects, Web App
 ---
 Making a blog has always been fairly high on my list prospective projects I'd like to take a stab at some day, but always seemed a little too daunting. At the time of writing, I've just graduated, so I've been focusing on personal projects to build a portfolio that will hopefully show off what I'm proficient in to employers. So, after finishing my personal website, I turned to this as the next project to work on.
 

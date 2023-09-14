@@ -4,7 +4,7 @@ title: Fighting Game Analysis Engine
 description: An analysis engine for Guilty Gear Strive (GGST). Analysis engines are common in chess, where they rate each players moves; I built it for a similar purpose in GGST.
 status: COMPLETE
 date: 9th Aug, 2023
-category: Projects
+category: Projects, Machine Learning
 theme: ggst
 credit: All credit goes to Arc System Works for the background image.
 ---
