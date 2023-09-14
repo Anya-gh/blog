@@ -7,6 +7,7 @@ import Sidebar from "./Sidebar"
 import  { parseMarkdownWithYamlFrontmatter } from './FrontMatterParser'
 import Banner from "./Banner"
 import Footer from "../../components/Footer"
+import { Slug } from "../../components/Slug"
 
 interface BlogProps {
   id: string
@@ -30,6 +31,7 @@ export default function Blog( {id} : BlogProps) {
 
 
   useEffect(() => {
+    console.log(window.location.pathname)
     window
     .matchMedia("(min-width: 1024px)")
     .addEventListener('change', e => setLargeScreen( e.matches ));
@@ -44,16 +46,6 @@ export default function Blog( {id} : BlogProps) {
     })
     .catch(error => console.error("Error loading markdown file: ", error))
   }, [])
-
-  const generateSlug = (content:string) => {
-    let str = content.replace(/^\s+|\s+$/g, "");
-    str = str.toLowerCase();
-    str = str
-      .replace(/[^a-z0-9 -]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-");
-    return str;
-  };
 
   function isString(value: React.ReactNode): value is string {
     return typeof value === 'string'
@@ -71,6 +63,11 @@ export default function Blog( {id} : BlogProps) {
     href?: string | undefined
   }
 
+  type ImgProps = ElementProps & {
+    src?: string | undefined
+    alt?: string | undefined
+  }
+
   return (
     <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {duration: 0.5}}} exit={{opacity: 0, transition: {duration: 0.5}}} className="flex flex-col items-center">
       <div className='flex flex-col items-center w-80 lg:w-[60rem] mx-10'>
@@ -83,7 +80,7 @@ export default function Blog( {id} : BlogProps) {
               h1: ( props : HeadingProps ) => {
                 const heading = Array.isArray(props.children) ? props.children[0] : props.children
                 if (isString(heading)) {
-                  const slug = generateSlug(heading)
+                  const slug = Slug(heading)
                   return <h1 className='text-4xl lg:text-5xl font-bold mb-5 pt-3 text-center' id={slug}>{props.children}</h1>
                 }
                 return <h1>{props.children}</h1>
@@ -91,7 +88,7 @@ export default function Blog( {id} : BlogProps) {
               h2: ( props : HeadingProps ) => {
                 const heading = Array.isArray(props.children) ? props.children[0] : props.children
                 if (isString(heading)) {
-                  const slug = generateSlug(heading)
+                  const slug = Slug(heading)
                   return <h2 className='text-2xl lg:text-3xl font-bold my-2 pt-3 border-b-4 border-zinc-800' id={slug}>{props.children}</h2>
                 }
                 return <h2>{props.children}</h2>
@@ -99,7 +96,7 @@ export default function Blog( {id} : BlogProps) {
               h3: ( props : HeadingProps ) => {
                 const heading = Array.isArray(props.children) ? props.children[0] : props.children
                 if (isString(heading)) {
-                  const slug = generateSlug(heading)
+                  const slug = Slug(heading)
                   return <h3 className='text-xl font-bold mt-3' id={slug}>{props.children}</h3>
                 }
                 return <h3>{props.children}</h3>
@@ -118,6 +115,9 @@ export default function Blog( {id} : BlogProps) {
               },
               a: ( props: AnchorProps ) => {
                 return <a href={props.href} className='text-sky-400'>{props.children}</a>
+              },
+              img: ( props: ImgProps ) => {
+                return <img src={`../../src/assets/images/${props.src}`} alt={props.alt ? props.alt : 'alt text'} className='max-h-[30rem] max-w-[18rem] lg:max-w-3xl h-auto w-auto ml-auto mr-auto my-5'/>
               }
             }}/>
           </div>

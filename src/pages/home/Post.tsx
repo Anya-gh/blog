@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { nestedPostType } from './List'
-import circle from '../../assets/images/circle.svg'
+import circle from '../../assets/icons/circle.svg'
 import { themes } from '../../components/Themes'
 
 type PostProps = nestedPostType & {

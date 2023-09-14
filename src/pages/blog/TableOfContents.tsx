@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useState, Dispatch, SetStateAction } from "react"
-import dropdown from '../../assets/images/dropdown.svg'
-import dash from '../../assets/images/dash.svg'
+import dropdown from '../../assets/icons/dropdown.svg'
+import dash from '../../assets/icons/dash.svg'
 
 interface ToCProps { 
   markdownRef: React.RefObject<HTMLDivElement>,
@@ -54,7 +54,7 @@ export default function TableOfContents( {markdownRef, setTableOpen} : ToCProps)
           return (
               <li key={heading.id} className='py-[0.1rem]'>
                 <span className='flex flex-row items-baseline justify-start'>
-                {heading.nested.length > 0 ? <button className='w-3 h-3 mr-2' onClick={() => handleOpenHeading(index)}><img src={dropdown} alt='dropdown' className={openHeadings[index] ? 'rotate-180 transition-transform duration-200' : 'rotate-90 transition-transform duration-200'}/></button> : <img src={dash} alt='dash' className='mr-2'/>}
+                {heading.nested.length > 0 ? <button className='mr-2 flex-shrink-0' onClick={() => handleOpenHeading(index)}><img src={dropdown} alt='dropdown' className={'h-3 w-3 ' + (openHeadings[index] ? 'rotate-180 transition-transform duration-200' : 'rotate-90 transition-transform duration-200')}/></button> : <img src={dash} alt='dash' className='mr-2'/>}
                   <a className='transition duration-200 lg:hover:text-blue-500 text-zinc-400' onClick={() => {setTableOpen(false)}} href={`#${heading.id}`}>{heading.title}</a>
                 </span>
                 <div className='overflow-hidden'>

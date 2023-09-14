@@ -1,8 +1,8 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react"
 import { themes } from "../../components/Themes"
-import dateicon from '../../assets/images/date.svg'
-import home from '../../assets/images/home.svg'
-import menu from '../../assets/images/menu.svg'
+import dateicon from '../../assets/icons/date.svg'
+import home from '../../assets/icons/home.svg'
+import menu from '../../assets/icons/menu.svg'
 import { useNavigate } from "react-router-dom"
 
 type BannerProps = {

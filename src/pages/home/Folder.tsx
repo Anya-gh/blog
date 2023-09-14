@@ -1,10 +1,10 @@
 import Post from './Post'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import folder from '../../assets/images/folder.svg'
-import dropdown from '../../assets/images/dropdown.svg'
+import folder from '../../assets/icons/folder.svg'
+import dropdown from '../../assets/icons/dropdown.svg'
 import { nestedPostType } from './List'
-import circle from '../../assets/images/circle.svg'
+import circle from '../../assets/icons/circle.svg'
 import { themes } from '../../components/Themes'
 
 type FolderProps = nestedPostType & {

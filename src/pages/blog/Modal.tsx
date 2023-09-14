@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
 import { motion } from 'framer-motion'
-import close from '../../assets/images/close_icon.svg'
+import close from '../../assets/icons/close_icon.svg'
 import TableOfContents from './TableOfContents'
 
 interface Props {

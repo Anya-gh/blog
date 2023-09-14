@@ -1,7 +1,7 @@
-import mail from '../assets/images/mail.svg'
-import github from '../assets/images/github-mark-white.svg'
-import linkedin from '../assets/images/LI-In-Bug.png'
-import circle from '../assets/images/circle.svg'
+import mail from '../assets/icons/mail.svg'
+import github from '../assets/icons/github-mark-white.svg'
+import linkedin from '../assets/icons/LI-In-Bug.png'
+import circle from '../assets/icons/circle.svg'
 
 export default function Footer() {
   return (
