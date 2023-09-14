@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react"
 import { useNavigate } from "react-router-dom"
-import home from '../../assets/images/home.svg'
-import menu from '../../assets/images/menu.svg'
-import logo from '../../assets/images/logo.svg'
+import home from '../../assets/icons/home.svg'
+import menu from '../../assets/icons/menu.svg'
+import logo from '../../assets/icons/logo.svg'
 
 interface MenuProps {
   setTableOpen: Dispatch<SetStateAction<boolean>>,

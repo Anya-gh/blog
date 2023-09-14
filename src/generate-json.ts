@@ -25,6 +25,7 @@ type MarkdownFrontmatter = {
   description?: string,
   category? : string,
   status? : string
+  theme? : string
 }
 
 type Post = Metadata & {
@@ -38,19 +39,20 @@ type Metadata = {
   description: string,
   category : string,
   status : string,
+  theme: string | undefined,
 }
 
 const newJsonData: Post[] = []
 
 const getJsonData = (filePath: string) => {
-  let metaData: Post = {title: '', id: '', description: '', status: '', date: '', category: ''}
+  let metaData: Post = {title: '', id: '', description: '', status: '', date: '', category: '', theme: undefined}
   const data = fs.readFileSync(filePath, 'utf8')
-  const {title, date, description, status, category} = parseMarkdownWithYamlFrontmatter<MarkdownFrontmatter>(data)
+  const {title, date, description, status, category, theme} = parseMarkdownWithYamlFrontmatter<MarkdownFrontmatter>(data)
   if (title && date && description && status && category) {
-    metaData = {title: title, id: title.replaceAll(' ', '-').toLowerCase(), description: description, status: status, date: date, category: category} 
+    metaData = {title: title, id: title.replaceAll(' ', '-').toLowerCase(), description: description, status: status, date: date, category: category, theme: theme} 
   }
   else {
-    throw new InvalidMetadata('Metadata is missing fields: ' + (!title && ' title;') + (!date && ' date;') + (!description && ' description;') + (!status && ' status;') + (!category && ' category;') + ' in ' + filePath + '.')
+    throw new InvalidMetadata('Metadata is missing fields: ' + (!title ? 'title; ' : '') + (!date ? 'date; ' : '') + (!description ? 'description; ' : '') + (!status ? 'status; ' : '') + (!category ? 'category; ' : '') + 'in ' + filePath + '.')
   }
   return metaData
 }
@@ -60,18 +62,23 @@ const generateJsonData = (folderPath:string) => {
     const filePath = `${folderPath}/${fileName}`
     if (fs.lstatSync(filePath).isDirectory()) {
       const nested: Metadata[] = []
-      let metaData = {title: fileName, id: fileName.replaceAll(' ', '-').toLowerCase(), description: '', status: '', date: '', category: '', nestedPosts: nested}
+      let metaData: Post = {title: fileName, id: fileName.replaceAll(' ', '-').toLowerCase(), description: '', status: '', date: '', category: '', theme: undefined, nestedPosts: nested}
+      const jsonFilePath = `${filePath}/${fileName}.json`
+      if (fs.existsSync(jsonFilePath)) {
+        const data = JSON.parse(fs.readFileSync(jsonFilePath, 'utf-8')) as Metadata
+        metaData = {title: data.title, id: data.title.replaceAll(' ', '-').toLowerCase(), description: data.description, status: data.status, date: data.date, category: data.category, theme: data.theme, nestedPosts: nested}
+        }
+      else {
+        throw new InvalidFileType(`Folder without JSON file found at ${filePath}. Please create a JSON file named ${fileName}.json for this folder.`)
+      }
       fs.readdirSync(filePath).forEach(nestedFileName => {
         const nestedFilePath = `${filePath}/${nestedFileName}`
         if (fs.lstatSync(nestedFilePath).isDirectory()) {
           throw new InvalidFileType('Nested folder found. Files should only be nested up to one level.')
-        }
-        if (path.extname(nestedFileName) === '.json') {
-          const data = JSON.parse(fs.readFileSync(nestedFilePath, 'utf-8')) as Metadata
-          metaData = {title: data.title, id: data.title.replaceAll(' ', '-').toLowerCase(), description: data.description, status: data.status, date: data.date, category: data.category, nestedPosts: nested}
-        }
+        } 
         else if (path.extname(nestedFileName) === '.md') {
           const fileMetaData = getJsonData(nestedFilePath)
+          fileMetaData.theme = metaData.theme
           nested.push(fileMetaData)
         }
       })
@@ -90,17 +97,20 @@ const generateJsonData = (folderPath:string) => {
 
 
 if (process.argv[2] && process.argv[2] === '-w') {
-  const watcher = chokidar.watch('./posts', {
-    ignoreInitial: true
+  const watcher = chokidar.watch('./posts',
+  { persistent: true,
+    ignoreInitial: true,
   });
 
   watcher.on('change', (path) => {
+    console.log('What did you do...')
     if (path !== `posts/posts.json` && path !== 'posts/newPosts.json') {
       console.log(`Detected change at ${path}!`)
       generateJsonData('./posts')
       fs.writeFileSync(`./posts/posts.json`, JSON.stringify(newJsonData))
     }
   });
+  watcher.on('error', error => {console.error(error)})
 }
 else {
   generateJsonData('./posts')
