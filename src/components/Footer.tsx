@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <>
       <Icons />
-      <p className='pb-10 text-sm tracking-widest text-slate-500 text-center w-80 md:w-full'>Created by me! You can have a look on GitHub <a href="https://github.com/Anya-gh/blog" className='text-slate-300'>here</a>.</p>
+      <p className='pb-10 text-sm tracking-widest text-slate-500 text-center w-80 md:w-full'>Created by me! You can have a look on GitHub <a href="https://github.com/Anya-gh/blog" className='text-slate-300'>here</a>, or find my portfolio <a href="https://anya-gh.github.io/portfolio" className='text-slate-300'>here</a>.</p>
     </>
   )
 }

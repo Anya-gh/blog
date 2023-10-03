@@ -117,6 +117,5 @@ else {
   fs.writeFileSync(`./posts/posts.json`, JSON.stringify(newJsonData))
 }
 
-
-
+// ts-node --esm ./generate-json.ts to run
 
