@@ -5,11 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "ts-node --esm ./src/generate-json.ts -w & vite --port 3000",
-    "build": "ts-node --esm ./src/generate-json.ts && tsc && vite build",
+    "deploy": "gh-pages -d dist",
+    "build": "ts-node --esm ./src/generate-json.ts && cross-env NODE_ENV=production tsc && vite build && cp dist/index.html dist/404.html",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "ts-node --esm ./src/generate-json.ts && vite preview"
+    "preview": "ts-node --esm ./src/generate-json.ts && cross-env NODE_ENV=production vite preview --port 3001"
   },
   "dependencies": {
+    "gh-pages": "^6.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.2"
