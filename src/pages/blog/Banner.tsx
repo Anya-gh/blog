@@ -33,9 +33,9 @@ export default function Banner( {title, date, theme, setTableOpen} : BannerProps
     <div className='pt-10 pb-10 w-full top-0 sticky bg-darkmetal'>
       <div className={`rounded-br-lg rounded-bl-lg w-full min-h-28 lg:min-h-32 ${bg}`}>
         <div className='w-full h-full flex flex-row items-center justify-center bg-black bg-opacity-50 rounded-br-lg rounded-bl-lg p-10'>
-          <div className='flex flex-col mr-5'>
-            <button onClick={() => navigate('/')}><img src={home} alt='home' className='h-6 mb-3' /></button>
-            <button onClick={() => setTableOpen(table => !table)}><img src={menu} alt='menu' className='h-6' /></button>
+          <div className='flex flex-col mr-5 flex-shrink-0'>
+            <button onClick={() => navigate('/')}><img src={home} alt='home' className='h-5 md:h-6 mb-3' /></button>
+            <button onClick={() => setTableOpen(table => !table)}><img src={menu} alt='menu' className='h-5 md:h-6' /></button>
           </div>
           <div className='flex flex-col'>
             <h1 className='font-bold text-xl lg:text-3xl'>{title}</h1> 

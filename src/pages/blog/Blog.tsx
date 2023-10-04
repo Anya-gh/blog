@@ -74,7 +74,7 @@ export default function Blog( {id} : BlogProps) {
 
   return (
     <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {duration: 0.5}}} exit={{opacity: 0, transition: {duration: 0.5}}} className="flex flex-col items-center">
-      <div className='flex flex-col items-center w-80 lg:w-[60rem] mx-10'>
+      <div className='flex flex-col items-center w-80 md:w-[40rem] lg:w-[60rem] mx-10'>
         {/*<Menu setTableOpen={setTableOpen} largeScreen={largeScreen}/>*/}
         {data.title && data.date && <Banner title={data.title} date={data.date} theme={data.theme} setTableOpen={setTableOpen}/>}
         {!largeScreen && <AnimatePresence>{tableOpen && <Modal setTableOpen={setTableOpen} markdownRef={markdownRef}></Modal>}</AnimatePresence>}
