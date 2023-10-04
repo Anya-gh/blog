@@ -2,7 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import Blog from './pages/blog/Blog'
 import './App.css'
 import Home from './pages/home/Home'
-import { default as postsJSON } from './posts/posts.json'
+import { default as postsJSON } from './assets/posts/posts.json'
 import { AnimatePresence } from 'framer-motion'
 import { PostType } from './pages/home/List'
 

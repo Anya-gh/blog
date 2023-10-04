@@ -106,15 +106,15 @@ if (process.argv[2] && process.argv[2] === '-w') {
     console.log('What did you do...')
     if (path !== `posts/posts.json` && path !== 'posts/newPosts.json') {
       console.log(`Detected change at ${path}!`)
-      generateJsonData('./src/posts')
-      fs.writeFileSync(`./src/posts/posts.json`, JSON.stringify(newJsonData))
+      generateJsonData('./src/assets/posts')
+      fs.writeFileSync(`./src/assets/posts/posts.json`, JSON.stringify(newJsonData))
     }
   });
   watcher.on('error', error => {console.error(error)})
 }
 else {
-  generateJsonData('./src/posts')
-  fs.writeFileSync(`./src/posts/posts.json`, JSON.stringify(newJsonData))
+  generateJsonData('./src/assets/posts')
+  fs.writeFileSync(`./src/assets/posts/posts.json`, JSON.stringify(newJsonData))
 }
 
 // ts-node --esm ./generate-json.ts to run

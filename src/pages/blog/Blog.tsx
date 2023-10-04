@@ -35,7 +35,7 @@ export default function Blog( {id} : BlogProps) {
     window
     .matchMedia("(min-width: 1024px)")
     .addEventListener('change', e => setLargeScreen( e.matches ));
-    const path = `../../posts/${id}.md`
+    const path = `../../assets/posts/${id}.md`
     import(path /* @vite-ignore */)
     .then(res => res.default)
     .then(res => {

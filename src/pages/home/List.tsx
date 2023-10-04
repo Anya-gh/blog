@@ -1,6 +1,6 @@
 import Post from './Post'
 import Folder from './Folder'
-import { default as postsJSON } from '../../posts/posts.json'
+import { default as postsJSON } from '../../assets/posts/posts.json'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Slug } from '../../components/Slug'
 
