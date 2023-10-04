@@ -16,7 +16,6 @@ export default function Post( {title, id, description, status, category, date, n
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log(credit)
     if (theme && themes[theme] !== undefined) {
       setBg(themes[theme].style)
       setCredit(themes[theme].credit)
