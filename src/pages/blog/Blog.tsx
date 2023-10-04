@@ -42,7 +42,6 @@ export default function Blog( {id} : BlogProps) {
       const {content, ...frontmatter} = parseMarkdownWithYamlFrontmatter<MarkdownFrontmatter>(res)
       setContent(content)
       setData(frontmatter)
-      console.log(frontmatter)
     })
     .catch(error => console.error("Error loading markdown file: ", error))
   }, [])
