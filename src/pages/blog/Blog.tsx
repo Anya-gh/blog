@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react"
-import { files } from "../../components/Files"
+// import { files } from "../../components/Files"
 import ReactMarkdown from 'react-markdown'
 //import Menu from "./Menu"
 import Modal from "./Modal"
@@ -35,20 +35,18 @@ export default function Blog( {id} : BlogProps) {
     window
     .matchMedia("(min-width: 1024px)")
     .addEventListener('change', e => setLargeScreen( e.matches ));
-    /*
-    const path = `../../assets/posts/${id}.md`
-    import(path @vite-ignore)
+    import(`../../assets/posts/${id}.md` /*@vite-ignore*/)
     .then(res => res.default)
     .then(res => {
       const {content, ...frontmatter} = parseMarkdownWithYamlFrontmatter<MarkdownFrontmatter>(res)
       setContent(content)
       setData(frontmatter)
     })
-    .catch(error => console.error("Error loading markdown file: ", error)) */
-    const file = files[id] 
+    .catch(error => console.error("Error loading markdown file: ", error))
+    /*const file = files[id] 
     const {content, ...frontmatter} = parseMarkdownWithYamlFrontmatter<MarkdownFrontmatter>(file)
     setContent(content)
-    setData(frontmatter)
+    setData(frontmatter)*/
   }, [])
 
   function isString(value: React.ReactNode): value is string {
