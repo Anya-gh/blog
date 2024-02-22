@@ -9,5 +9,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter basename={process.env.NODE_ENV === 'production' ? '/blog' : '/'}>
       <App />
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
 )
