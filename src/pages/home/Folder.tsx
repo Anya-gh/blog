@@ -60,7 +60,7 @@ export default function Folder( {title, id, description, date, category, status,
             {showPosts && 
               <motion.ul className="list-none" initial={{opacity: 0, y: "-100%", height: 0}} animate={{opacity: 1, transition: {duration: 0.2}, y: 0, height: "auto"}} exit={{opacity: 0, transition: {duration: 0.2}, y: "-100%", height: 0}}>
                 {nestedPosts.map(post => {
-                  return (<Post title={post.title} id={`${id}/${post.id}`} description={post.description} status={post.status} category={post.category} date={post.date} nested={true}/>)
+                  return (<Post key={post.title} title={post.title} id={`${id}/${post.id}`} description={post.description} status={post.status} category={post.category} date={post.date} nested={true}/>)
                 })}
               </motion.ul>
             }

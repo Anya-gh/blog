@@ -1,7 +1,5 @@
 import { useEffect, useState, useRef } from "react"
-// import { files } from "../../components/Files"
 import ReactMarkdown from 'react-markdown'
-//import Menu from "./Menu"
 import Modal from "./Modal"
 import { AnimatePresence, motion } from "framer-motion"
 import Sidebar from "./Sidebar"
@@ -11,7 +9,8 @@ import Footer from "../../components/Footer"
 import { Slug } from "../../components/Slug"
 
 interface BlogProps {
-  id: string
+  id: string,
+  folder?: string
 }
 
 type MarkdownFrontmatter = {
@@ -22,7 +21,7 @@ type MarkdownFrontmatter = {
   theme?: string,
 }
 
-export default function Blog( {id} : BlogProps) {
+export default function Blog( {id, folder} : BlogProps) {
 
   const [content, setContent] = useState('')
   const [data, setData] = useState<MarkdownFrontmatter>({})
@@ -35,7 +34,8 @@ export default function Blog( {id} : BlogProps) {
     window
     .matchMedia("(min-width: 1024px)")
     .addEventListener('change', e => setLargeScreen( e.matches ));
-    import(`../../assets/posts/${id}.md` /*@vite-ignore*/)
+    const fileImport = folder ? import(`../../assets/posts/${folder}/${id}.md`) : import(`../../assets/posts/${id}.md`)
+    fileImport
     .then(res => res.default)
     .then(res => {
       const {content, ...frontmatter} = parseMarkdownWithYamlFrontmatter<MarkdownFrontmatter>(res)
@@ -43,10 +43,6 @@ export default function Blog( {id} : BlogProps) {
       setData(frontmatter)
     })
     .catch(error => console.error("Error loading markdown file: ", error))
-    /*const file = files[id] 
-    const {content, ...frontmatter} = parseMarkdownWithYamlFrontmatter<MarkdownFrontmatter>(file)
-    setContent(content)
-    setData(frontmatter)*/
   }, [])
 
   function isString(value: React.ReactNode): value is string {
@@ -73,7 +69,6 @@ export default function Blog( {id} : BlogProps) {
   return (
     <motion.div initial={{opacity: 0}} animate={{opacity: 1, transition: {duration: 0.5}}} exit={{opacity: 0, transition: {duration: 0.5}}} className="flex flex-col items-center">
       <div className='flex flex-col items-center w-80 md:w-[40rem] lg:w-[60rem] mx-10'>
-        {/*<Menu setTableOpen={setTableOpen} largeScreen={largeScreen}/>*/}
         {data.title && data.date && <Banner title={data.title} date={data.date} theme={data.theme} setTableOpen={setTableOpen}/>}
         {!largeScreen && <AnimatePresence>{tableOpen && <Modal setTableOpen={setTableOpen} markdownRef={markdownRef}></Modal>}</AnimatePresence>}
         <div className="flex flex-row scroll-smooth mb-10">

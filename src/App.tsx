@@ -17,7 +17,7 @@ function App() {
         <Route path='' element={<Home />}/>
         {posts.map(post => {
           return ( 
-            post.nestedPosts ? post.nestedPosts.map(nestedPost => { return ( <Route key={`${post.title}/${nestedPost.title}`} path={`/${post.id}/${nestedPost.id}`} element={<Blog id={`${post.id}/${nestedPost.id}`}/>}/> )})
+            post.nestedPosts ? post.nestedPosts.map(nestedPost => { return ( <Route key={`${post.title}/${nestedPost.title}`} path={`/${post.id}/${nestedPost.id}`} element={<Blog id={`${nestedPost.id}`} folder={`${post.id}`}/>}/> )})
             : <Route key={post.title} path={`/${post.id}`} element={<Blog id={post.id}/>}/>
           )
         })}
