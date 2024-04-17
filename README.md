@@ -1,3 +1,3 @@
 # Blog
 
-My personal blog, designed in Figma and developed using React and Typescript.
+My personal blog, designed in Figma, developed using React and Typescript.
